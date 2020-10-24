@@ -28,7 +28,7 @@ class SubFinderCsv:
             ):
                 return row["mpn"]
         print(
-            f"{Fore.YELLOW}No part number found for {Style.BRIGHT}{part.val.value} {part.footprint.value}{Style.RESET_ALL}{Fore.RESET}"
+            f"{Fore.YELLOW}No part number found for {Style.BRIGHT}{part.val.value},{part.footprint.value}{Style.RESET_ALL}{Fore.RESET}"
         )
 
         return ""
