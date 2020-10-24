@@ -73,7 +73,6 @@ def update_bom(in_path, out_path, subs_path):
 
     for line in bom:
         if line.mpn.value == "":
-            # print("Found value with missing MPN", line.val.value, line.footprint.value)
             line.mpn.value = generic_finder.find(line)
 
     bom.save(out_path)
