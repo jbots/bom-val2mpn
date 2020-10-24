@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 
+from colorama import Fore, Style
 from collections import namedtuple
 from openpyxl import load_workbook
 from pathlib import Path
@@ -26,7 +27,10 @@ class SubFinderCsv:
                 and part.footprint.value == row["footprint"]
             ):
                 return row["mpn"]
-        print(f"No part number found for {part.val.value} {part.footprint.value}")
+        print(
+            f"{Fore.YELLOW}No part number found for {Style.BRIGHT}{part.val.value} {part.footprint.value}{Style.RESET_ALL}{Fore.RESET}"
+        )
+
         return ""
 
 
