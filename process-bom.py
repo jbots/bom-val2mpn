@@ -27,10 +27,8 @@ class SubFinderCsv:
                 and part.footprint.value == row["footprint"]
             ):
                 return row["mpn"]
-        print(
-            f"{Fore.YELLOW}No part number found for {Style.BRIGHT}{part.val.value},{part.footprint.value}{Style.RESET_ALL}{Fore.RESET}"
-        )
 
+        # Not found
         return ""
 
 
@@ -75,9 +73,20 @@ def update_bom(in_path, out_path, subs_path):
     bom = BomXlsGen.from_path(in_path)
     generic_finder = SubFinderCsv(subs_path)
 
+    unmatched = []
+
     for line in bom:
         if line.mpn.value == "":
             line.mpn.value = generic_finder.find(line)
+            if line.mpn.value == "":
+                unmatched.append(line)
+
+    if len(unmatched) > 0:
+        print(f"{Fore.YELLOW}{len(unmatched)} missing part numbers:{Fore.RESET}")
+        for part in unmatched:
+            print(
+                f"{Fore.YELLOW}{Style.BRIGHT}{part.val.value},{part.footprint.value}{Style.RESET_ALL}{Fore.RESET}"
+            )
 
     bom.save(out_path)
 
